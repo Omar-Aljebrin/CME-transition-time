@@ -35,10 +35,6 @@ from scipy.optimize import fsolve
 # =============================================================================
 
 # =============================================================================
-# FUNCTIONS
-# -----------------------------------------------------------------------------
-
-# =============================================================================
 # Position vs Time Functions
 # =============================================================================
 
@@ -61,10 +57,6 @@ def quadratic_func(x, b1, b2, b3):
 
 def logstic_quadratic_func(x, a1, a2, a3, b1, b2, b3):
     return logstic_func(x, a1, a2, a3) + quadratic_func(x, b1, b2, b3)
-
-# def logstic_quadratic_func(x, a, b, x0, c, d, h0, x1):
-#     return  a / (1 + np.exp(-b * (x - x0))) + c * (x-x1)**2 + d * (x-x1) + h0
-
 
 
 # ----Function for interaction point between two functions----
@@ -126,7 +118,7 @@ def logstic_m_quadratic_dx(x, a, b, x0, c, d, h0):
 
 #------------------------------------------------------------------
 # Importing the Data
-#--------------------------------------------
+#-----------------------------------------------------------------
 # Define file path
 dname = '../data'  # One directory up
 fname = 'ht4.txt'  # File name with extension
