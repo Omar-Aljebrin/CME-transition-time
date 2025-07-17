@@ -429,6 +429,12 @@ plt.plot(xf, yfit23_velocity, color='purple', linestyle='-', label='Velocity (So
 
 plt.plot(xf, softplus_velocity, color='green', linestyle='-', label='Velocity (Softplus Only)')
 
+# Extract inflection point location
+p2 = popt23_softplus[2]
+
+# Plot vertical line at x = p2 (inflection point)
+plt.axvline(x=p2, color='gray', linestyle='--', linewidth=1.2, label=f'Inflection Point (x = {p2:.1f})')
+
 # Quadratic fit
 #plt.plot(xf, vfit23_q, label='Quadratic Fit')
 
@@ -446,7 +452,7 @@ plt.plot(xf, softplus_velocity, color='green', linestyle='-', label='Velocity (S
 plt.xlim(0, 100)
 plt.ylim(-0.1, .2)
 plt.grid()
-#plt.legend(loc='upper right')
+plt.legend(loc='upper right')
 plt.xlabel("Time (min)")
 plt.ylabel("Velocity (R☉/min)")
 
@@ -456,3 +462,4 @@ plt.show()
 # =============================================================================
 # END OF SCRIPT
 # =============================================================================
+
