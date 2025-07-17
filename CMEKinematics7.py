@@ -120,6 +120,11 @@ def softplus_func_dx(x, p0, p1, p2):
     z = p1 * (x - p2)
     return p0 * p1 * np.exp(z) / (1 + np.exp(z))
 
+def softplus_func_ddx(x, p0, p1, p2):
+    z = p1 * (x - p2)
+    exp_z = np.exp(z)
+    denom = (1 + exp_z)**2
+    return p0 * p1**2 * exp_z / denom
 
 
 
@@ -195,7 +200,8 @@ yerr23 = yerr[1:90]
 
 # Compute velocity using the gradient
 vel = np.gradient(y, x)
-
+# Compute acceleration using the gradient
+accel = np.gradient(vel, x)
 # =============================================================================
 # Curve Fitting
 # =============================================================================
@@ -267,7 +273,7 @@ yfit23_velocity = softplus_quadratic_func_dx(xf, *popt23_softplus)
 vfit23_lo = logstic_func_dx(xf, popt23[0], popt23[1], popt23[2])
 vfit23_q = quadratic_func_dx(xf, popt23[3], popt23[4], popt23[5]) 
 softplus_velocity = softplus_func_dx(xf, *popt23_softplus[:3])
-
+softplus_accel = softplus_func_ddx(xf, *popt23_softplus[:3])
 
 vfit23 = vfit23_lo + vfit23_q
     
@@ -388,6 +394,7 @@ plt.ylabel("Height from Sun Surface (R☉)")
 plt.legend(loc='upper right')
 plt.show()
 
+
 # Combined fit (Exponential + Quadratic)
 #plt.plot(xf, yfit23, label='logstic + Quadratic Fit')
 
@@ -457,9 +464,22 @@ plt.xlabel("Time (min)")
 plt.ylabel("Velocity (R☉/min)")
 
 plt.show()
+# =============================================================================
+# PHASE 2-3: Acceleration VS. TIME
+# =============================================================================
+# Plot acceleration
+plt.figure()
+plt.plot(xf, softplus_accel, color='red', label='Acceleration (Softplus Only)')
+plt.plot(x, accel, 'o', color='blue', markersize=3, label='True Acceleration')
+plt.xlabel("Time (min)")
+plt.ylabel("Acceleration (R☉/min²)")
+plt.title("Phase 2–3 Acceleration (Softplus Component)")
+plt.legend()
+plt.grid(True)
 
 
 # =============================================================================
 # END OF SCRIPT
 # =============================================================================
+
 
